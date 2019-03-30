@@ -13,7 +13,7 @@ def service_controller(service, token):
             "content": ""
         }
     }
-    ws = create_connection("ws://127.0.0.1:3143/")
+    ws = create_connection("wss://private-ws.driplet.cf")
     command = service["log_command"]
     p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
     while True:
