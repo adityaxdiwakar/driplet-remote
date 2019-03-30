@@ -56,6 +56,4 @@ while True:
                     # deleted service
                     sd[service["id"]].terminate()
         services = nc
-
-    print(sd)
     time.sleep(15)
