@@ -30,7 +30,7 @@ for service in services:
     )
     ip.start()
     sd.update({service["id"]: ip})
-
+    
 while True:
     nc = requests.get(
         f"https://api.driplet.cf/endpoints/{client_id}/services", headers={"authorization": token}).json()

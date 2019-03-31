@@ -18,6 +18,7 @@ def service_controller(service, token):
         }
     }
     thr = threading.Thread(target=_fmp.act, args=[service, token])
+    thr.start()
     ws = create_connection("wss://private-ws.driplet.cf")
     command = service["log_command"]
     p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
