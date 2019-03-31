@@ -1,11 +1,12 @@
-from websocket import create_connection
 import json
+import os
+import time
 import subprocess
 import threading
 
-import _fmp
+from websocket import create_connection
 
-def service_controller(service, token):
+def act(service, token):
     content = {
         "credentials": {
             "client_id": service["associated_to"],
@@ -16,13 +17,20 @@ def service_controller(service, token):
             "content": "",
             "type": "Log Provider"
         }
-    }
-    thr = threading.Thread(target=_fmp.act, args=[service, token])
-    thr.start()
+    }   
     ws = create_connection("wss://private-ws.driplet.cf")
     command = service["log_command"]
     p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
+    threading.Thread(target=provider, args=[ws, p, content]).start()
+    pinger(ws)                                         
+
+def pinger(ws):
     while True:
+        ws.send("Ping")
+        time.sleep(1)
+
+def provider(ws, p, content):
+     while True:
         load = p.stdout.readline()
         content["payload"]["content"] = load.decode('utf-8')
-        ws.send(json.dumps(content)) 
+        ws.send(json.dumps(content))      
