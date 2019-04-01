@@ -88,7 +88,7 @@ User=root
 ExecStart=/usr/bin/env python3 /opt/driplet/main.py
 
 [Install]
-WantedBy=multi-user.targe
+WantedBy=multi-user.target
 ```
 
 Your mileage may vary on the ``ExecStart=/usr/bin/env python3...``, this may need to be replaced accordingly.
