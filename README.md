@@ -14,9 +14,11 @@ Make an account and log into ``https://driplet.cf`` and open the developer tools
 
 ### Method 1
 
-Run the following command on your server:
+Run the following commands on your server in any directory:
 ```bash
-sudo wget https://dl.driplet.cf/install.sh && sudo chmod +x install.sh && sudo ./install.sh
+wget https://dl.driplet.cf/install.sh
+sudo chmod +x install.sh
+sudo bash install.sh
 ```
 
 The installation script will prompt you for the ID and Token metioned above, provide it accordingly.
