@@ -10,7 +10,7 @@ There are two methods to install the remote onto your server, the first is easie
 
 Before you begin, you will need two pieces of information for either version, these being the ``CLIENT_ID`` and ``ACCESS_TOKEN``.
 
-Make an account and log into ``https://driplet.cf`` and open the developer tools using ``Ctrl+Shift+I``, go to the ``Application`` window to view cookies; there are *two* stored cookies; ``token`` and ``userid``, these correspond to ``ACCESS_TOKEN`` and ``CLIENT_ID`` respectively.
+Make an account and log into ``https://driplet.cf`` and open the developer tools using ``Ctrl+Shift+I``, go to the ``Application`` window to view local storage; there are *two* stored items; ``token`` and ``userid``, these correspond to ``ACCESS_TOKEN`` and ``CLIENT_ID`` respectively.
 
 ### Method 1
 
