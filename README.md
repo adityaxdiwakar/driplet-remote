@@ -1,3 +1,5 @@
+Proudly open source, operated by aditya holdings.
+
 # remote
 
 The remote control operator for Driplet's central server, this is what you install to your server.
