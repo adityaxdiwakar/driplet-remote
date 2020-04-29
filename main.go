@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"sync"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -54,10 +55,13 @@ func main() {
 		log.Fatal("error: could not retrieve service list")
 	}
 
+	var wg sync.WaitGroup
+	wg.Add(2)
 	for _, service := range responseServices {
 		log.Printf("%s", service)
 		go serverConnect(service, authDetails)
 	}
+	wg.Wait()
 }
 
 var addr = flag.String("addr", "vps.adi.wtf:8000", "http service address")
