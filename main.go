@@ -71,7 +71,7 @@ func serverConnect(service APIService, authDetails AuthenticationDetails) {
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
-		log.Fatal("dial:", err)
+		log.Printf("dial:", err)
 	} else {
 		log.Printf("Received 'Hello' from WS")
 	}
@@ -87,14 +87,13 @@ func serverConnect(service APIService, authDetails AuthenticationDetails) {
 	cmd := exec.Command("tail", "-f", "/var/log/nginx/access.log")
 	cmdReader, err := cmd.StdoutPipe()
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("%v", err)
 	}
 	cmd.Start()
 
 	scanner := bufio.NewScanner(cmdReader)
 	go func() {
 		for scanner.Scan() {
-			log.Printf(scanner.Text())
 			c.WriteJSON(ServerPayload{ServiceID: service.ID, Log: scanner.Text()})
 		}
 	}()
