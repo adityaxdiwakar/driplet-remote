@@ -94,7 +94,7 @@ func serverConnect(service APIService, authDetails AuthenticationDetails) {
 	scanner := bufio.NewScanner(cmdReader)
 	go func() {
 		for scanner.Scan() {
-			c.WriteJSON(ServerPayload{ServiceID: service.ID, Log: scanner.Text()})
+			c.WriteJSON(ServerPayload{ServiceID: service.ID, Log: scanner.Text(), UserID: authDetails.UserID})
 		}
 	}()
 

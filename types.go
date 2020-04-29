@@ -17,11 +17,12 @@ type APIService struct {
 	Logs           []string `json:"logs"`
 }
 
-// ServerPayload datatype for outgoing log messages
+// ServerPayload datatype for incoming log messages
 type ServerPayload struct {
 	Heartbeat bool   `json:"heartbeat"`
 	ServiceID string `json:"service_id"`
 	Log       string `json:"log"`
+	UserID    string `json:"user_id"`
 }
 
 // AuthenticationDetails to feed to each socket
