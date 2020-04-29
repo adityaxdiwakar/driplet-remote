@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"strings"
 	"sync"
 	"time"
 
@@ -75,7 +76,7 @@ func serverConnect(service APIService, authDetails AuthenticationDetails) {
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
-		log.Printf("dial:", err)
+		log.Printf("dial: %v", err)
 	} else {
 		log.Printf("Received 'Hello' from WS")
 	}
@@ -88,7 +89,8 @@ func serverConnect(service APIService, authDetails AuthenticationDetails) {
 	}
 
 	c.WriteJSON(authRequest)
-	cmd := exec.Command("tail", "-f", "/var/log/nginx/access.log")
+	args := strings.Fields(service.LogCommand)
+	cmd := exec.Command(args[0], args[1:]...)
 	cmdReader, err := cmd.StdoutPipe()
 	if err != nil {
 		log.Printf("%v", err)
