@@ -56,7 +56,7 @@ func main() {
 
 	for _, service := range responseServices {
 		log.Printf("%s", service)
-		serverConnect(service, authDetails)
+		go serverConnect(service, authDetails)
 	}
 }
 
