@@ -4,33 +4,26 @@ import time
 import subprocess
 import threading
 
-from websocket import create_connection
+import websocket
 
 def act(service, token):
     content = {
-        "credentials": {
-            "client_id": service["associated_to"],
-            "token": token
-        },
-        "payload": {
-            "service_id": service["id"],
-            "content": "",
-            "type": "Log Provider"
-        }
+        "user_id": service["associated_to"],
+        "auth_token": token,
+        "service_id": service["id"]
     }   
-    ws = create_connection("wss://private-ws.driplet.cf")
+    ws = websocket.create_connection("ws://localhost:8000/ws/server")
+    ws.send(json.dumps(content))
     command = service["log_command"]
     p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
-    threading.Thread(target=provider, args=[ws, p, content]).start()
-    pinger(ws)                                         
+    # threading.Thread(target=provider, args=[ws, p, content]).start()
+    provider(ws, p, service["id"])
 
-def pinger(ws):
-    while True:
-        ws.send("Ping")
-        time.sleep(1)
-
-def provider(ws, p, content):
+def provider(ws, p, service_id):
      while True:
         load = p.stdout.readline()
-        content["payload"]["content"] = load.decode('utf-8')
-        ws.send(json.dumps(content))      
+        payload = {
+            "service_id": service_id,
+            "log": load.decode('utf-8')
+        }
+        ws.send(json.dumps(payload))      
