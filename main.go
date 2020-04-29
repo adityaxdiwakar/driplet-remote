@@ -33,7 +33,7 @@ func main() {
 		UserID:    os.Getenv("CLIENT_ID"),
 	}
 
-	authURL := fmt.Sprintf("http://backend.driplet.adi.wtf/endpoints/%s/services", authDetails.UserID)
+	authURL := fmt.Sprintf("https://api.driplet.tk/endpoints/%s/services", authDetails.UserID)
 
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", authURL, nil)
@@ -65,13 +65,13 @@ func main() {
 	wg.Wait()
 }
 
-var addr = flag.String("addr", "vps.adi.wtf:8000", "http service address")
+var addr = flag.String("addr", "ws.driplet.tk", "http service address")
 
 func serverConnect(service APIService, authDetails AuthenticationDetails) {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	u := url.URL{Scheme: "ws", Host: *addr, Path: "/ws/server"}
+	u := url.URL{Scheme: "wss", Host: *addr, Path: "/ws/server"}
 	// log.Printf("Connecting to Tradovate Market Data Socket")
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
